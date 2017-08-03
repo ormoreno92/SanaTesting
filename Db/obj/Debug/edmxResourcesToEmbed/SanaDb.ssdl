@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SanaTestingDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CategoriesPerProduct">
+    <Key>
+      <PropertyRef Name="Cpp_cppId" />
+    </Key>
+    <Property Name="Cpp_cppId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cpp_ProductC_productcId" Type="int" Nullable="false" />
+    <Property Name="Cpp_Products_productId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Customers_customerId" />
+    </Key>
+    <Property Name="Customers_customerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Customers_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Customers_lastname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Customers_email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Customers_creationDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Orders_orderId" />
+    </Key>
+    <Property Name="Orders_orderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Orders_orderDate" Type="datetime" Nullable="false" />
+    <Property Name="Orders_customerId" Type="int" Nullable="false" />
+    <Property Name="Orders_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Orders_Customers_customerId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductCategories">
+    <Key>
+      <PropertyRef Name="ProductC_productcId" />
+    </Key>
+    <Property Name="ProductC_productcId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductC_description" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="ProductC_name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Products_productId" />
+    </Key>
+    <Property Name="Products_productId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Products_productName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Products_productDescription" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Products_productPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Products_productQuantity" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductsPerOrder">
+    <Key>
+      <PropertyRef Name="Ppo_ppoId" />
+    </Key>
+    <Property Name="Ppo_ppoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ppo_Orders_orderId" Type="int" Nullable="false" />
+    <Property Name="Ppo_Products_productId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CategoriesPerProduct_ProductCategories">
+    <End Role="ProductCategories" Type="Self.ProductCategories" Multiplicity="1" />
+    <End Role="CategoriesPerProduct" Type="Self.CategoriesPerProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductCategories">
+        <PropertyRef Name="ProductC_productcId" />
+      </Principal>
+      <Dependent Role="CategoriesPerProduct">
+        <PropertyRef Name="Cpp_ProductC_productcId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CategoriesPerProduct_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="CategoriesPerProduct" Type="Self.CategoriesPerProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Products_productId" />
+      </Principal>
+      <Dependent Role="CategoriesPerProduct">
+        <PropertyRef Name="Cpp_Products_productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Orders_Customers">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Customers_customerId" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Orders_Customers_customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductsPerOrder_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="ProductsPerOrder" Type="Self.ProductsPerOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Orders_orderId" />
+      </Principal>
+      <Dependent Role="ProductsPerOrder">
+        <PropertyRef Name="Ppo_Orders_orderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductsPerOrder_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ProductsPerOrder" Type="Self.ProductsPerOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Products_productId" />
+      </Principal>
+      <Dependent Role="ProductsPerOrder">
+        <PropertyRef Name="Ppo_Products_productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SanaTestingDbModelStoreContainer">
+    <EntitySet Name="CategoriesPerProduct" EntityType="Self.CategoriesPerProduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductCategories" EntityType="Self.ProductCategories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductsPerOrder" EntityType="Self.ProductsPerOrder" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="CategoriesPerProduct_ProductCategories" Association="Self.CategoriesPerProduct_ProductCategories">
+      <End Role="ProductCategories" EntitySet="ProductCategories" />
+      <End Role="CategoriesPerProduct" EntitySet="CategoriesPerProduct" />
+    </AssociationSet>
+    <AssociationSet Name="CategoriesPerProduct_Products" Association="Self.CategoriesPerProduct_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="CategoriesPerProduct" EntitySet="CategoriesPerProduct" />
+    </AssociationSet>
+    <AssociationSet Name="Orders_Customers" Association="Self.Orders_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="ProductsPerOrder_Orders" Association="Self.ProductsPerOrder_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="ProductsPerOrder" EntitySet="ProductsPerOrder" />
+    </AssociationSet>
+    <AssociationSet Name="ProductsPerOrder_Products" Association="Self.ProductsPerOrder_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductsPerOrder" EntitySet="ProductsPerOrder" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

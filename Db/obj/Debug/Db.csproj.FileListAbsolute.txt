@@ -1,0 +1,10 @@
+D:\Projects\JobTestings\SanaTestingOne\Db\bin\Debug\Db.dll.config
+D:\Projects\JobTestings\SanaTestingOne\Db\bin\Debug\Db.dll
+D:\Projects\JobTestings\SanaTestingOne\Db\bin\Debug\Db.pdb
+D:\Projects\JobTestings\SanaTestingOne\Db\bin\Debug\EntityFramework.dll
+D:\Projects\JobTestings\SanaTestingOne\Db\bin\Debug\EntityFramework.SqlServer.dll
+D:\Projects\JobTestings\SanaTestingOne\Db\bin\Debug\EntityFramework.xml
+D:\Projects\JobTestings\SanaTestingOne\Db\bin\Debug\EntityFramework.SqlServer.xml
+D:\Projects\JobTestings\SanaTestingOne\Db\obj\Debug\Db.csprojResolveAssemblyReference.cache
+D:\Projects\JobTestings\SanaTestingOne\Db\obj\Debug\Db.dll
+D:\Projects\JobTestings\SanaTestingOne\Db\obj\Debug\Db.pdb

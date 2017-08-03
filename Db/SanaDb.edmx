@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SanaTestingDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CategoriesPerProduct">
+          <Key>
+            <PropertyRef Name="Cpp_cppId" />
+          </Key>
+          <Property Name="Cpp_cppId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cpp_ProductC_productcId" Type="int" Nullable="false" />
+          <Property Name="Cpp_Products_productId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Customers_customerId" />
+          </Key>
+          <Property Name="Customers_customerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customers_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customers_lastname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customers_email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customers_creationDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Orders_orderId" />
+          </Key>
+          <Property Name="Orders_orderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Orders_orderDate" Type="datetime" Nullable="false" />
+          <Property Name="Orders_customerId" Type="int" Nullable="false" />
+          <Property Name="Orders_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Orders_Customers_customerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductCategories">
+          <Key>
+            <PropertyRef Name="ProductC_productcId" />
+          </Key>
+          <Property Name="ProductC_productcId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductC_description" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ProductC_name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Products_productId" />
+          </Key>
+          <Property Name="Products_productId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Products_productName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Products_productDescription" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Products_productPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Products_productQuantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductsPerOrder">
+          <Key>
+            <PropertyRef Name="Ppo_ppoId" />
+          </Key>
+          <Property Name="Ppo_ppoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ppo_Orders_orderId" Type="int" Nullable="false" />
+          <Property Name="Ppo_Products_productId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="CategoriesPerProduct_ProductCategories">
+          <End Role="ProductCategories" Type="Self.ProductCategories" Multiplicity="1" />
+          <End Role="CategoriesPerProduct" Type="Self.CategoriesPerProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategories">
+              <PropertyRef Name="ProductC_productcId" />
+            </Principal>
+            <Dependent Role="CategoriesPerProduct">
+              <PropertyRef Name="Cpp_ProductC_productcId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoriesPerProduct_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="CategoriesPerProduct" Type="Self.CategoriesPerProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Products_productId" />
+            </Principal>
+            <Dependent Role="CategoriesPerProduct">
+              <PropertyRef Name="Cpp_Products_productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Orders_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Customers_customerId" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Orders_Customers_customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductsPerOrder_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="ProductsPerOrder" Type="Self.ProductsPerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Orders_orderId" />
+            </Principal>
+            <Dependent Role="ProductsPerOrder">
+              <PropertyRef Name="Ppo_Orders_orderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductsPerOrder_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductsPerOrder" Type="Self.ProductsPerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Products_productId" />
+            </Principal>
+            <Dependent Role="ProductsPerOrder">
+              <PropertyRef Name="Ppo_Products_productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SanaTestingDbModelStoreContainer">
+          <EntitySet Name="CategoriesPerProduct" EntityType="Self.CategoriesPerProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategories" EntityType="Self.ProductCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductsPerOrder" EntityType="Self.ProductsPerOrder" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="CategoriesPerProduct_ProductCategories" Association="Self.CategoriesPerProduct_ProductCategories">
+            <End Role="ProductCategories" EntitySet="ProductCategories" />
+            <End Role="CategoriesPerProduct" EntitySet="CategoriesPerProduct" />
+          </AssociationSet>
+          <AssociationSet Name="CategoriesPerProduct_Products" Association="Self.CategoriesPerProduct_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="CategoriesPerProduct" EntitySet="CategoriesPerProduct" />
+          </AssociationSet>
+          <AssociationSet Name="Orders_Customers" Association="Self.Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="ProductsPerOrder_Orders" Association="Self.ProductsPerOrder_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="ProductsPerOrder" EntitySet="ProductsPerOrder" />
+          </AssociationSet>
+          <AssociationSet Name="ProductsPerOrder_Products" Association="Self.ProductsPerOrder_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsPerOrder" EntitySet="ProductsPerOrder" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SanaTestingDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SanaTestingDbEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="CategoriesPerProduct" EntityType="SanaTestingDbModel.CategoriesPerProduct" />
+          <EntitySet Name="Customers" EntityType="SanaTestingDbModel.Customers" />
+          <EntitySet Name="Orders" EntityType="SanaTestingDbModel.Orders" />
+          <EntitySet Name="ProductCategories" EntityType="SanaTestingDbModel.ProductCategories" />
+          <EntitySet Name="ProductsPerOrder" EntityType="SanaTestingDbModel.ProductsPerOrder" />
+          <AssociationSet Name="CategoriesPerProduct_ProductCategories" Association="SanaTestingDbModel.CategoriesPerProduct_ProductCategories">
+            <End Role="ProductCategories" EntitySet="ProductCategories" />
+            <End Role="CategoriesPerProduct" EntitySet="CategoriesPerProduct" />
+          </AssociationSet>
+          <AssociationSet Name="Orders_Customers" Association="SanaTestingDbModel.Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="ProductsPerOrder_Orders" Association="SanaTestingDbModel.ProductsPerOrder_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="ProductsPerOrder" EntitySet="ProductsPerOrder" />
+          </AssociationSet>
+          <EntitySet Name="Products" EntityType="SanaTestingDbModel.Products" />
+          <AssociationSet Name="CategoriesPerProduct_Products" Association="SanaTestingDbModel.CategoriesPerProduct_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="CategoriesPerProduct" EntitySet="CategoriesPerProduct" />
+          </AssociationSet>
+          <AssociationSet Name="ProductsPerOrder_Products" Association="SanaTestingDbModel.ProductsPerOrder_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsPerOrder" EntitySet="ProductsPerOrder" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CategoriesPerProduct">
+          <Key>
+            <PropertyRef Name="Cpp_cppId" />
+          </Key>
+          <Property Name="Cpp_cppId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cpp_ProductC_productcId" Type="Int32" Nullable="false" />
+          <Property Name="Cpp_Products_productId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductCategories" Relationship="SanaTestingDbModel.CategoriesPerProduct_ProductCategories" FromRole="CategoriesPerProduct" ToRole="ProductCategories" />
+          <NavigationProperty Name="Products" Relationship="SanaTestingDbModel.CategoriesPerProduct_Products" FromRole="CategoriesPerProduct" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Customers_customerId" />
+          </Key>
+          <Property Name="Customers_customerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customers_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Customers_lastname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Customers_email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Customers_creationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Orders" Relationship="SanaTestingDbModel.Orders_Customers" FromRole="Customers" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Orders_orderId" />
+          </Key>
+          <Property Name="Orders_orderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Orders_orderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Orders_customerId" Type="Int32" Nullable="false" />
+          <Property Name="Orders_price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Orders_Customers_customerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customers" Relationship="SanaTestingDbModel.Orders_Customers" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="ProductsPerOrder" Relationship="SanaTestingDbModel.ProductsPerOrder_Orders" FromRole="Orders" ToRole="ProductsPerOrder" />
+        </EntityType>
+        <EntityType Name="ProductCategories">
+          <Key>
+            <PropertyRef Name="ProductC_productcId" />
+          </Key>
+          <Property Name="ProductC_productcId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductC_description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ProductC_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CategoriesPerProduct" Relationship="SanaTestingDbModel.CategoriesPerProduct_ProductCategories" FromRole="ProductCategories" ToRole="CategoriesPerProduct" />
+        </EntityType>
+        <EntityType Name="ProductsPerOrder">
+          <Key>
+            <PropertyRef Name="Ppo_ppoId" />
+          </Key>
+          <Property Name="Ppo_ppoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ppo_Orders_orderId" Type="Int32" Nullable="false" />
+          <Property Name="Ppo_Products_productId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="SanaTestingDbModel.ProductsPerOrder_Orders" FromRole="ProductsPerOrder" ToRole="Orders" />
+          <NavigationProperty Name="Products" Relationship="SanaTestingDbModel.ProductsPerOrder_Products" FromRole="ProductsPerOrder" ToRole="Products" />
+        </EntityType>
+        <Association Name="CategoriesPerProduct_ProductCategories">
+          <End Type="SanaTestingDbModel.ProductCategories" Role="ProductCategories" Multiplicity="1" />
+          <End Type="SanaTestingDbModel.CategoriesPerProduct" Role="CategoriesPerProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategories">
+              <PropertyRef Name="ProductC_productcId" />
+            </Principal>
+            <Dependent Role="CategoriesPerProduct">
+              <PropertyRef Name="Cpp_ProductC_productcId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Orders_Customers">
+          <End Type="SanaTestingDbModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="SanaTestingDbModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Customers_customerId" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Orders_Customers_customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductsPerOrder_Orders">
+          <End Type="SanaTestingDbModel.Orders" Role="Orders" Multiplicity="1" />
+          <End Type="SanaTestingDbModel.ProductsPerOrder" Role="ProductsPerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Orders_orderId" />
+            </Principal>
+            <Dependent Role="ProductsPerOrder">
+              <PropertyRef Name="Ppo_Orders_orderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Products_productId" />
+          </Key>
+          <Property Name="Products_productId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Products_productName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Products_productDescription" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Products_productPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Products_productQuantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CategoriesPerProduct" Relationship="SanaTestingDbModel.CategoriesPerProduct_Products" FromRole="Products" ToRole="CategoriesPerProduct" />
+          <NavigationProperty Name="ProductsPerOrder" Relationship="SanaTestingDbModel.ProductsPerOrder_Products" FromRole="Products" ToRole="ProductsPerOrder" />
+        </EntityType>
+        <Association Name="CategoriesPerProduct_Products">
+          <End Type="SanaTestingDbModel.Products" Role="Products" Multiplicity="1" />
+          <End Type="SanaTestingDbModel.CategoriesPerProduct" Role="CategoriesPerProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Products_productId" />
+            </Principal>
+            <Dependent Role="CategoriesPerProduct">
+              <PropertyRef Name="Cpp_Products_productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductsPerOrder_Products">
+          <End Type="SanaTestingDbModel.Products" Role="Products" Multiplicity="1" />
+          <End Type="SanaTestingDbModel.ProductsPerOrder" Role="ProductsPerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Products_productId" />
+            </Principal>
+            <Dependent Role="ProductsPerOrder">
+              <PropertyRef Name="Ppo_Products_productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SanaTestingDbModelStoreContainer" CdmEntityContainer="SanaTestingDbEntities" >
+          <EntitySetMapping Name="CategoriesPerProduct">
+            <EntityTypeMapping TypeName="SanaTestingDbModel.CategoriesPerProduct">
+              <MappingFragment StoreEntitySet="CategoriesPerProduct">
+                <ScalarProperty Name="Cpp_Products_productId" ColumnName="Cpp_Products_productId" />
+                <ScalarProperty Name="Cpp_ProductC_productcId" ColumnName="Cpp_ProductC_productcId" />
+                <ScalarProperty Name="Cpp_cppId" ColumnName="Cpp_cppId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="SanaTestingDbModel.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="Customers_creationDate" ColumnName="Customers_creationDate" />
+                <ScalarProperty Name="Customers_email" ColumnName="Customers_email" />
+                <ScalarProperty Name="Customers_lastname" ColumnName="Customers_lastname" />
+                <ScalarProperty Name="Customers_name" ColumnName="Customers_name" />
+                <ScalarProperty Name="Customers_customerId" ColumnName="Customers_customerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="SanaTestingDbModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Orders_Customers_customerId" ColumnName="Orders_Customers_customerId" />
+                <ScalarProperty Name="Orders_price" ColumnName="Orders_price" />
+                <ScalarProperty Name="Orders_customerId" ColumnName="Orders_customerId" />
+                <ScalarProperty Name="Orders_orderDate" ColumnName="Orders_orderDate" />
+                <ScalarProperty Name="Orders_orderId" ColumnName="Orders_orderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="SanaTestingDbModel.ProductCategories">
+              <MappingFragment StoreEntitySet="ProductCategories">
+                <ScalarProperty Name="ProductC_name" ColumnName="ProductC_name" />
+                <ScalarProperty Name="ProductC_description" ColumnName="ProductC_description" />
+                <ScalarProperty Name="ProductC_productcId" ColumnName="ProductC_productcId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductsPerOrder">
+            <EntityTypeMapping TypeName="SanaTestingDbModel.ProductsPerOrder">
+              <MappingFragment StoreEntitySet="ProductsPerOrder">
+                <ScalarProperty Name="Ppo_Products_productId" ColumnName="Ppo_Products_productId" />
+                <ScalarProperty Name="Ppo_Orders_orderId" ColumnName="Ppo_Orders_orderId" />
+                <ScalarProperty Name="Ppo_ppoId" ColumnName="Ppo_ppoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="SanaTestingDbModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Products_productQuantity" ColumnName="Products_productQuantity" />
+                <ScalarProperty Name="Products_productPrice" ColumnName="Products_productPrice" />
+                <ScalarProperty Name="Products_productDescription" ColumnName="Products_productDescription" />
+                <ScalarProperty Name="Products_productName" ColumnName="Products_productName" />
+                <ScalarProperty Name="Products_productId" ColumnName="Products_productId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

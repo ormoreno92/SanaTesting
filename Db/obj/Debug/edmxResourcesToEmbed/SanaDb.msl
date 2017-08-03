@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SanaTestingDbModelStoreContainer" CdmEntityContainer="SanaTestingDbEntities">
+    <EntitySetMapping Name="CategoriesPerProduct">
+      <EntityTypeMapping TypeName="SanaTestingDbModel.CategoriesPerProduct">
+        <MappingFragment StoreEntitySet="CategoriesPerProduct">
+          <ScalarProperty Name="Cpp_Products_productId" ColumnName="Cpp_Products_productId" />
+          <ScalarProperty Name="Cpp_ProductC_productcId" ColumnName="Cpp_ProductC_productcId" />
+          <ScalarProperty Name="Cpp_cppId" ColumnName="Cpp_cppId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="SanaTestingDbModel.Customers">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="Customers_creationDate" ColumnName="Customers_creationDate" />
+          <ScalarProperty Name="Customers_email" ColumnName="Customers_email" />
+          <ScalarProperty Name="Customers_lastname" ColumnName="Customers_lastname" />
+          <ScalarProperty Name="Customers_name" ColumnName="Customers_name" />
+          <ScalarProperty Name="Customers_customerId" ColumnName="Customers_customerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="SanaTestingDbModel.Orders">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Orders_Customers_customerId" ColumnName="Orders_Customers_customerId" />
+          <ScalarProperty Name="Orders_price" ColumnName="Orders_price" />
+          <ScalarProperty Name="Orders_customerId" ColumnName="Orders_customerId" />
+          <ScalarProperty Name="Orders_orderDate" ColumnName="Orders_orderDate" />
+          <ScalarProperty Name="Orders_orderId" ColumnName="Orders_orderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductCategories">
+      <EntityTypeMapping TypeName="SanaTestingDbModel.ProductCategories">
+        <MappingFragment StoreEntitySet="ProductCategories">
+          <ScalarProperty Name="ProductC_name" ColumnName="ProductC_name" />
+          <ScalarProperty Name="ProductC_description" ColumnName="ProductC_description" />
+          <ScalarProperty Name="ProductC_productcId" ColumnName="ProductC_productcId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductsPerOrder">
+      <EntityTypeMapping TypeName="SanaTestingDbModel.ProductsPerOrder">
+        <MappingFragment StoreEntitySet="ProductsPerOrder">
+          <ScalarProperty Name="Ppo_Products_productId" ColumnName="Ppo_Products_productId" />
+          <ScalarProperty Name="Ppo_Orders_orderId" ColumnName="Ppo_Orders_orderId" />
+          <ScalarProperty Name="Ppo_ppoId" ColumnName="Ppo_ppoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="SanaTestingDbModel.Products">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Products_productQuantity" ColumnName="Products_productQuantity" />
+          <ScalarProperty Name="Products_productPrice" ColumnName="Products_productPrice" />
+          <ScalarProperty Name="Products_productDescription" ColumnName="Products_productDescription" />
+          <ScalarProperty Name="Products_productName" ColumnName="Products_productName" />
+          <ScalarProperty Name="Products_productId" ColumnName="Products_productId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

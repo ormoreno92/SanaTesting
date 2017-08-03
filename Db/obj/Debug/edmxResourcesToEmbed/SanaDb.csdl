@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SanaTestingDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="SanaTestingDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CategoriesPerProduct" EntityType="SanaTestingDbModel.CategoriesPerProduct" />
+    <EntitySet Name="Customers" EntityType="SanaTestingDbModel.Customers" />
+    <EntitySet Name="Orders" EntityType="SanaTestingDbModel.Orders" />
+    <EntitySet Name="ProductCategories" EntityType="SanaTestingDbModel.ProductCategories" />
+    <EntitySet Name="ProductsPerOrder" EntityType="SanaTestingDbModel.ProductsPerOrder" />
+    <AssociationSet Name="CategoriesPerProduct_ProductCategories" Association="SanaTestingDbModel.CategoriesPerProduct_ProductCategories">
+      <End Role="ProductCategories" EntitySet="ProductCategories" />
+      <End Role="CategoriesPerProduct" EntitySet="CategoriesPerProduct" />
+    </AssociationSet>
+    <AssociationSet Name="Orders_Customers" Association="SanaTestingDbModel.Orders_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="ProductsPerOrder_Orders" Association="SanaTestingDbModel.ProductsPerOrder_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="ProductsPerOrder" EntitySet="ProductsPerOrder" />
+    </AssociationSet>
+    <EntitySet Name="Products" EntityType="SanaTestingDbModel.Products" />
+    <AssociationSet Name="CategoriesPerProduct_Products" Association="SanaTestingDbModel.CategoriesPerProduct_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="CategoriesPerProduct" EntitySet="CategoriesPerProduct" />
+    </AssociationSet>
+    <AssociationSet Name="ProductsPerOrder_Products" Association="SanaTestingDbModel.ProductsPerOrder_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductsPerOrder" EntitySet="ProductsPerOrder" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CategoriesPerProduct">
+    <Key>
+      <PropertyRef Name="Cpp_cppId" />
+    </Key>
+    <Property Name="Cpp_cppId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cpp_ProductC_productcId" Type="Int32" Nullable="false" />
+    <Property Name="Cpp_Products_productId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ProductCategories" Relationship="SanaTestingDbModel.CategoriesPerProduct_ProductCategories" FromRole="CategoriesPerProduct" ToRole="ProductCategories" />
+    <NavigationProperty Name="Products" Relationship="SanaTestingDbModel.CategoriesPerProduct_Products" FromRole="CategoriesPerProduct" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Customers_customerId" />
+    </Key>
+    <Property Name="Customers_customerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customers_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Customers_lastname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Customers_email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Customers_creationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Orders" Relationship="SanaTestingDbModel.Orders_Customers" FromRole="Customers" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Orders_orderId" />
+    </Key>
+    <Property Name="Orders_orderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Orders_orderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Orders_customerId" Type="Int32" Nullable="false" />
+    <Property Name="Orders_price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="Orders_Customers_customerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customers" Relationship="SanaTestingDbModel.Orders_Customers" FromRole="Orders" ToRole="Customers" />
+    <NavigationProperty Name="ProductsPerOrder" Relationship="SanaTestingDbModel.ProductsPerOrder_Orders" FromRole="Orders" ToRole="ProductsPerOrder" />
+  </EntityType>
+  <EntityType Name="ProductCategories">
+    <Key>
+      <PropertyRef Name="ProductC_productcId" />
+    </Key>
+    <Property Name="ProductC_productcId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductC_description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="ProductC_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CategoriesPerProduct" Relationship="SanaTestingDbModel.CategoriesPerProduct_ProductCategories" FromRole="ProductCategories" ToRole="CategoriesPerProduct" />
+  </EntityType>
+  <EntityType Name="ProductsPerOrder">
+    <Key>
+      <PropertyRef Name="Ppo_ppoId" />
+    </Key>
+    <Property Name="Ppo_ppoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ppo_Orders_orderId" Type="Int32" Nullable="false" />
+    <Property Name="Ppo_Products_productId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="SanaTestingDbModel.ProductsPerOrder_Orders" FromRole="ProductsPerOrder" ToRole="Orders" />
+    <NavigationProperty Name="Products" Relationship="SanaTestingDbModel.ProductsPerOrder_Products" FromRole="ProductsPerOrder" ToRole="Products" />
+  </EntityType>
+  <Association Name="CategoriesPerProduct_ProductCategories">
+    <End Type="SanaTestingDbModel.ProductCategories" Role="ProductCategories" Multiplicity="1" />
+    <End Type="SanaTestingDbModel.CategoriesPerProduct" Role="CategoriesPerProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductCategories">
+        <PropertyRef Name="ProductC_productcId" />
+      </Principal>
+      <Dependent Role="CategoriesPerProduct">
+        <PropertyRef Name="Cpp_ProductC_productcId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Orders_Customers">
+    <End Type="SanaTestingDbModel.Customers" Role="Customers" Multiplicity="1" />
+    <End Type="SanaTestingDbModel.Orders" Role="Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Customers_customerId" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Orders_Customers_customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductsPerOrder_Orders">
+    <End Type="SanaTestingDbModel.Orders" Role="Orders" Multiplicity="1" />
+    <End Type="SanaTestingDbModel.ProductsPerOrder" Role="ProductsPerOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Orders_orderId" />
+      </Principal>
+      <Dependent Role="ProductsPerOrder">
+        <PropertyRef Name="Ppo_Orders_orderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Products_productId" />
+    </Key>
+    <Property Name="Products_productId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Products_productName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Products_productDescription" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Products_productPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="Products_productQuantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CategoriesPerProduct" Relationship="SanaTestingDbModel.CategoriesPerProduct_Products" FromRole="Products" ToRole="CategoriesPerProduct" />
+    <NavigationProperty Name="ProductsPerOrder" Relationship="SanaTestingDbModel.ProductsPerOrder_Products" FromRole="Products" ToRole="ProductsPerOrder" />
+  </EntityType>
+  <Association Name="CategoriesPerProduct_Products">
+    <End Type="SanaTestingDbModel.Products" Role="Products" Multiplicity="1" />
+    <End Type="SanaTestingDbModel.CategoriesPerProduct" Role="CategoriesPerProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Products_productId" />
+      </Principal>
+      <Dependent Role="CategoriesPerProduct">
+        <PropertyRef Name="Cpp_Products_productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductsPerOrder_Products">
+    <End Type="SanaTestingDbModel.Products" Role="Products" Multiplicity="1" />
+    <End Type="SanaTestingDbModel.ProductsPerOrder" Role="ProductsPerOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Products_productId" />
+      </Principal>
+      <Dependent Role="ProductsPerOrder">
+        <PropertyRef Name="Ppo_Products_productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

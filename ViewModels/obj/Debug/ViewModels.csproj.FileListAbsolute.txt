@@ -1,0 +1,5 @@
+D:\Projects\JobTestings\SanaTestingOne\ViewModels\bin\Debug\ViewModels.dll
+D:\Projects\JobTestings\SanaTestingOne\ViewModels\bin\Debug\ViewModels.pdb
+D:\Projects\JobTestings\SanaTestingOne\ViewModels\obj\Debug\ViewModels.csprojResolveAssemblyReference.cache
+D:\Projects\JobTestings\SanaTestingOne\ViewModels\obj\Debug\ViewModels.dll
+D:\Projects\JobTestings\SanaTestingOne\ViewModels\obj\Debug\ViewModels.pdb

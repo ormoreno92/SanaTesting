@@ -1,0 +1,65 @@
+﻿@using ViewModels
+@model List<Product>
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<h3>Select the type of storage to be used with the data</h3>
+<ul class="custom-list">
+    <!--<li onclick="changeStorage(1)" class="btn btn-default">Local Storage</li>-->
+    <li onclick="changeStorage(2)" class="btn btn-default">Server Session</li>
+    <li onclick="changeStorage(6)" class="btn btn-default">Server Memory</li>
+    <li class="innner-filing">
+        Custom File
+    </li>
+    <li class="innner-filing">
+        <ul class="custom-list custom-inner-list">
+            <li onclick="changeStorage(3)" class="btn btn-default">Svc File</li>
+            <li onclick="changeStorage(4)" class="btn btn-default">Xml File</li>
+            <li onclick="changeStorage(5)" class="btn btn-default">Json File</li>
+        </ul>
+    </li>
+</ul>
+
+<hr />
+
+<h2>Hello, here you can find the products list!</h2>
+
+<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="m-b-30">
+                    @Html.ActionLink("Add Product", "AddProduct", "Products", new { area = "" }, new { @class = "btn btn-primary waves-effect waves-light" })
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <table class="table table-striped" id="datatable-editable">
+                <thead>
+                    <tr>
+                        <th>Product Id</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.productId</td>
+                                <td>@item.Title</td>
+                                <td>@item.Price</td>
+                                <td>@item.productQuantity</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
